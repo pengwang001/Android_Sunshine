@@ -1,0 +1,19 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <EditTextPreference
+        android:key="@string/Pref_Location_Key"
+        android:title="@string/Pref_Location_Title"
+        android:defaultValue="@string/Pref_Location_Default"
+        android:singleLine="true"
+        />
+
+
+    <ListPreference
+        android:key="@string/Pref_Metrics_Key"
+        android:title="@string/Pref_Metrics_Title"
+        android:entries="@array/Pref_Unit_Types"
+        android:entryValues="@array/Pref_Unit_Types_Val"
+        android:defaultValue="metric"
+        />
+</PreferenceScreen>
