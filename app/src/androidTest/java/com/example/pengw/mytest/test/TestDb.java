@@ -15,8 +15,12 @@
  */
 package com.example.android.sunshine.app.test;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
+import android.util.Log;
+
 import com.example.android.sunshine.app.data.WeatherContract.LocationEntry;
 import com.example.android.sunshine.app.data.WeatherContract.WeatherEntry;
 import com.example.android.sunshine.app.data.WeatherDbHelper;
@@ -33,9 +37,7 @@ public class TestDb extends AndroidTestCase {
         db.close();
     }
 
-    /* TODO Uncomment for
-    4a - JUnit testing
-    https://www.udacity.com/course/viewer#!/c-ud853/l-1639338560/m-1633698603
+
     public void testInsertReadDb() {
 
         // Test data we're going to insert into the DB to see if it works.
@@ -57,7 +59,7 @@ public class TestDb extends AndroidTestCase {
         values.put(LocationEntry.COLUMN_COORD_LONG, testLongitude);
 
         long locationRowId;
-        locationRowId = db.insert(LocationEntry.TABLE_NAME, null, values);
+        locationRowId = db.insert(LocationEntry.Table_Name, null, values);
 
         // Verify we got a row back.
         assertTrue(locationRowId != -1);
@@ -77,7 +79,7 @@ public class TestDb extends AndroidTestCase {
 
         // A cursor is your primary interface to the query results.
         Cursor cursor = db.query(
-                LocationEntry.TABLE_NAME,  // Table to Query
+                LocationEntry.Table_Name,  // Table to Query
                 columns,
                 null, // Columns for the "where" clause
                 null, // Values for the "where" clause
@@ -127,14 +129,43 @@ public class TestDb extends AndroidTestCase {
         weatherValues.put(WeatherEntry.COLUMN_SHORT_DESC, "Asteroids");
         weatherValues.put(WeatherEntry.COLUMN_WIND_SPEED, 5.5);
         weatherValues.put(WeatherEntry.COLUMN_WEATHER_ID, 321);
-        */
+
 
         /**
          * TODO YOUR CODE BELOW HERE FOR QUIZ
          * QUIZ - 4a - InsertReadDbTest
          * https://www.udacity.com/course/viewer#!/c-ud853/l-1639338560/e-1633698604/m-1633698605
          **/
+        Long iRowIDforWeather = db.insert(WeatherEntry.TABLE_NAME,null,weatherValues);
+        if (iRowIDforWeather!=-1)
+        {
+            String[] columnsToQuery = {WeatherEntry.COLUMN_LOC_KEY,
+                    WeatherEntry.COLUMN_DATETEXT,
+                    WeatherEntry.COLUMN_DEGREES,
+                    WeatherEntry.COLUMN_HUMIDITY,
+                    WeatherEntry.COLUMN_PRESSURE
+                    };
+            cursor = db.query(WeatherEntry.TABLE_NAME,columnsToQuery, null,null,null,null,null);
+            if (cursor.moveToNext()) {
+                int iColumnIndex = cursor.getColumnIndex(WeatherEntry.COLUMN_LOC_KEY);
+                long iID = cursor.getLong(iColumnIndex);
+                assertEquals(iID,locationRowId);
 
+                iColumnIndex = cursor.getColumnIndex(WeatherEntry.COLUMN_DATETEXT);
+                assertEquals("20141205",cursor.getString(iColumnIndex));
+
+                iColumnIndex = cursor.getColumnIndex(WeatherEntry.COLUMN_DEGREES);
+                assertEquals(1.1, cursor.getDouble(iColumnIndex));
+            }
+            else
+            {
+                fail("Can't find inserted data");
+            }
+        }
+        else
+        {
+            fail("Can't insert to database!");
+        }
         /* TODO Uncomment for
         4a - JUnit testing
         https://www.udacity.com/course/viewer#!/c-ud853/l-1639338560/m-1633698603
@@ -190,4 +221,5 @@ public class TestDb extends AndroidTestCase {
     static final String TEST_LOCATION = "99705";
     static final String TEST_DATE = "20141205";
     */
+    }
 }
