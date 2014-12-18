@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.sunshine.app.data;
+package com.example.pengw.mytest.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

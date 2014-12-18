@@ -39,6 +39,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pengw.mytest.MainActivity" />
         </activity>
+        <provider
+            android:authorities="com.example.pengw.mytest"
+            android:name=".data.WeatherProvider" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
