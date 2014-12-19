@@ -16,12 +16,15 @@
 package com.example.pengw.mytest.data;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+
+import com.example.pengw.mytest.WeatherDataParser;
 
 public class WeatherProvider extends ContentProvider {
 
@@ -159,6 +162,30 @@ public class WeatherProvider extends ContentProvider {
                  );
                  break;
              }
+             case LOCATION: {
+                 retCursor = mOpenHelper.getReadableDatabase().query(
+                         WeatherContract.LocationEntry.TABLE_NAME,
+                         projection,
+                         selection,
+                         selectionArgs,
+                         null,
+                         null,
+                         sortOrder
+                 );
+                 break;
+             }
+             case LOCATION_ID: {
+                 retCursor = mOpenHelper.getReadableDatabase().query(
+                         WeatherContract.LocationEntry.TABLE_NAME,
+                         projection,
+                         WeatherContract.LocationEntry._ID + " = '" + ContentUris.parseId(uri) + "'",
+                         null,
+                         null,
+                         null,
+                         sortOrder
+                 );
+                 break;
+             }
 
              /**
               * TODO YOUR CODE BELOW HERE FOR QUIZ
@@ -186,13 +213,10 @@ public class WeatherProvider extends ContentProvider {
                  return WeatherContract.WeatherEntry.CONTENT_TYPE;
              case WEATHER:
                  return WeatherContract.WeatherEntry.CONTENT_TYPE;
-
-             /**
-              * TODO YOUR CODE BELOW HERE FOR QUIZ
-              * QUIZ - 4b - Coding the Content Provider : getType
-              * https://www.udacity.com/course/viewer#!/c-ud853/l-1576308909/e-1675098546/m-1675098547
-              **/
-
+             case LOCATION:
+                 return WeatherContract.LocationEntry.CONTENT_TYPE;
+             case LOCATION_ID:
+                 return WeatherContract.LocationEntry.CONTENT_ITEM_TYPE;
              default:
                  throw new UnsupportedOperationException("Unknown uri: " + uri);
          }

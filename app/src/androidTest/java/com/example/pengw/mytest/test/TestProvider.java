@@ -13,7 +13,7 @@
   * See the License for the specific language governing permissions and
   * limitations under the License.
   */
-package com.example.android.sunshine.app.test;
+package com.example.pengw.mytest.test;
 
 import android.annotation.TargetApi;
 import android.content.ContentUris;
@@ -22,9 +22,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.test.AndroidTestCase;
-import android.util.Log;
-import com.example.android.sunshine.app.data.WeatherContract.LocationEntry;
-import com.example.android.sunshine.app.data.WeatherContract.WeatherEntry;
+
+import com.example.pengw.mytest.data.WeatherContract.LocationEntry;
+import com.example.pengw.mytest.data.WeatherContract.WeatherEntry;
 
 public class TestProvider extends AndroidTestCase {
 
@@ -74,13 +74,11 @@ public class TestProvider extends AndroidTestCase {
          deleteAllRecords();
      }
 
-     /* TODO Uncomment for
-     4b - Implement Location_ID queries
-     https://www.udacity.com/course/viewer#!/c-ud853/l-1576308909/e-1675098551/m-1675098552
+     
 
      public void testInsertReadProvider() {
 
-         ContentValues testValues = TestDb.createNorthPoleLocationValues();
+         ContentValues testValues = com.example.pengw.mytest.test.TestDb.createNorthPoleLocationValues();
 
          Uri locationUri = mContext.getContentResolver().insert(LocationEntry.CONTENT_URI, testValues);
          long locationRowId = ContentUris.parseId(locationUri);
@@ -100,7 +98,7 @@ public class TestProvider extends AndroidTestCase {
                  null  // sort order
          );
 
-         TestDb.validateCursor(cursor, testValues);
+         com.example.pengw.mytest.test.TestDb.validateCursor(cursor, testValues);
 
          // Now see if we can successfully query if we include the row id
          cursor = mContext.getContentResolver().query(
@@ -111,10 +109,10 @@ public class TestProvider extends AndroidTestCase {
                  null  // sort order
          );
 
-         TestDb.validateCursor(cursor, testValues);
+         com.example.pengw.mytest.test.TestDb.validateCursor(cursor, testValues);
 
          // Fantastic.  Now that we have a location, add some weather!
-         ContentValues weatherValues = TestDb.createWeatherValues(locationRowId);
+         ContentValues weatherValues = com.example.pengw.mytest.test.TestDb.createWeatherValues(locationRowId);
 
          Uri weatherInsertUri = mContext.getContentResolver()
                  .insert(WeatherEntry.CONTENT_URI, weatherValues);
@@ -129,7 +127,7 @@ public class TestProvider extends AndroidTestCase {
                  null // columns to group by
          );
 
-         TestDb.validateCursor(weatherCursor, weatherValues);
+         com.example.pengw.mytest.test.TestDb.validateCursor(weatherCursor, weatherValues);
 
          // Add the location values in with the weather data so that we can make
          // sure that the join worked and we actually get all the values back
@@ -137,36 +135,36 @@ public class TestProvider extends AndroidTestCase {
 
          // Get the joined Weather and Location data
          weatherCursor = mContext.getContentResolver().query(
-                 WeatherEntry.buildWeatherLocation(TestDb.TEST_LOCATION),
+                 WeatherEntry.buildWeatherLocation(com.example.pengw.mytest.test.TestDb.TEST_LOCATION),
                  null, // leaving "columns" null just returns all the columns.
                  null, // cols for "where" clause
                  null, // values for "where" clause
                  null  // sort order
          );
-         TestDb.validateCursor(weatherCursor, weatherValues);
+         com.example.pengw.mytest.test.TestDb.validateCursor(weatherCursor, weatherValues);
 
          // Get the joined Weather and Location data with a start date
          weatherCursor = mContext.getContentResolver().query(
                  WeatherEntry.buildWeatherLocationWithStartDate(
-                         TestDb.TEST_LOCATION, TestDb.TEST_DATE),
+                         com.example.pengw.mytest.test.TestDb.TEST_LOCATION, com.example.pengw.mytest.test.TestDb.TEST_DATE),
                  null, // leaving "columns" null just returns all the columns.
                  null, // cols for "where" clause
                  null, // values for "where" clause
                  null  // sort order
          );
-         TestDb.validateCursor(weatherCursor, weatherValues);
+         com.example.pengw.mytest.test.TestDb.validateCursor(weatherCursor, weatherValues);
 
          // Get the joined Weather data for a specific date
          weatherCursor = mContext.getContentResolver().query(
-                 WeatherEntry.buildWeatherLocationWithDate(TestDb.TEST_LOCATION, TestDb.TEST_DATE),
+                 WeatherEntry.buildWeatherLocationWithDate(com.example.pengw.mytest.test.TestDb.TEST_LOCATION, com.example.pengw.mytest.test.TestDb.TEST_DATE),
                  null,
                  null,
                  null,
                  null
          );
-         TestDb.validateCursor(weatherCursor, weatherValues);
+         com.example.pengw.mytest.test.TestDb.validateCursor(weatherCursor, weatherValues);
      }
-	   */
+	
     
     
 
@@ -174,33 +172,33 @@ public class TestProvider extends AndroidTestCase {
      4b - Coding the Content Provider : getType()
      https://www.udacity.com/course/viewer#!/c-ud853/l-1576308909/e-1675098546/m-1675098547
      public void testGetType() {
-         // content://com.example.android.sunshine.app/weather/
+         // content://com.example.pengw.mytest/weather/
          String type = mContext.getContentResolver().getType(WeatherEntry.CONTENT_URI);
-         // vnd.android.cursor.dir/com.example.android.sunshine.app/weather
+         // vnd.android.cursor.dir/com.example.pengw.mytest/weather
          assertEquals(WeatherEntry.CONTENT_TYPE, type);
 
          String testLocation = "94074";
-         // content://com.example.android.sunshine.app/weather/94074
+         // content://com.example.pengw.mytest/weather/94074
          type = mContext.getContentResolver().getType(
                  WeatherEntry.buildWeatherLocation(testLocation));
-         // vnd.android.cursor.dir/com.example.android.sunshine.app/weather
+         // vnd.android.cursor.dir/com.example.pengw.mytest/weather
          assertEquals(WeatherEntry.CONTENT_TYPE, type);
 
          String testDate = "20140612";
-         // content://com.example.android.sunshine.app/weather/94074/20140612
+         // content://com.example.pengw.mytest/weather/94074/20140612
          type = mContext.getContentResolver().getType(
                  WeatherEntry.buildWeatherLocationWithDate(testLocation, testDate));
-         // vnd.android.cursor.item/com.example.android.sunshine.app/weather
+         // vnd.android.cursor.item/com.example.pengw.mytest/weather
          assertEquals(WeatherEntry.CONTENT_ITEM_TYPE, type);
 
-         // content://com.example.android.sunshine.app/location/
+         // content://com.example.pengw.mytest/location/
          type = mContext.getContentResolver().getType(LocationEntry.CONTENT_URI);
-         // vnd.android.cursor.dir/com.example.android.sunshine.app/location
+         // vnd.android.cursor.dir/com.example.pengw.mytest/location
          assertEquals(LocationEntry.CONTENT_TYPE, type);
 
-         // content://com.example.android.sunshine.app/location/1
+         // content://com.example.pengw.mytest/location/1
          type = mContext.getContentResolver().getType(LocationEntry.buildLocationUri(1L));
-         // vnd.android.cursor.item/com.example.android.sunshine.app/location
+         // vnd.android.cursor.item/com.example.pengw.mytest/location
          assertEquals(LocationEntry.CONTENT_ITEM_TYPE, type);
      }
      */

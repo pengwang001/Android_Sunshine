@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.sunshine.app.test;
+package com.example.pengw.mytest.test;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -21,9 +21,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
-import com.example.android.sunshine.app.data.WeatherContract.LocationEntry;
-import com.example.android.sunshine.app.data.WeatherContract.WeatherEntry;
-import com.example.android.sunshine.app.data.WeatherDbHelper;
+import com.example.pengw.mytest.data.WeatherContract.LocationEntry;
+import com.example.pengw.mytest.data.WeatherContract.WeatherEntry;
+import com.example.pengw.mytest.data.WeatherDbHelper;
 
 import java.util.Map;
 import java.util.Set;
@@ -52,7 +52,7 @@ public class TestDb extends AndroidTestCase {
         ContentValues values = createNorthPoleLocationValues();
 
         long locationRowId;
-        locationRowId = db.insert(LocationEntry.Table_Name, null, values);
+        locationRowId = db.insert(LocationEntry.TABLE_NAME, null, values);
 
         // Verify we got a row back.
         assertTrue(locationRowId != -1);
@@ -64,7 +64,7 @@ public class TestDb extends AndroidTestCase {
 
         // A cursor is your primary interface to the query results.
         Cursor cursor = db.query(
-                LocationEntry.Table_Name,  // Table to Query
+                LocationEntry.TABLE_NAME,  // Table to Query
                 null,
                 null, // Columns for the "where" clause
                 null, // Values for the "where" clause

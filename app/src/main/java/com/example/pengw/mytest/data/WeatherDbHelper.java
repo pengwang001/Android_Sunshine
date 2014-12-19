@@ -18,8 +18,8 @@ package com.example.pengw.mytest.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.example.android.sunshine.app.data.WeatherContract.LocationEntry;
-import com.example.android.sunshine.app.data.WeatherContract.WeatherEntry;
+import com.example.pengw.mytest.data.WeatherContract.LocationEntry;
+import com.example.pengw.mytest.data.WeatherContract.WeatherEntry;
 
 /**
  * Manages a local database for weather data.
@@ -43,7 +43,7 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
          * https://www.udacity.com/course/viewer#!/c-ud853/l-1639338560/e-1633698599/m-1633698600
          **/
 
-        final String SQL_CREATE_LOCATION_TABLE = "CREATE TABLE " + LocationEntry.Table_Name + " ("
+        final String SQL_CREATE_LOCATION_TABLE = "CREATE TABLE " + LocationEntry.TABLE_NAME + " ("
                 + LocationEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + LocationEntry.COLUMN_CITY_NAME + " TEXT NOT NULL,"
                 + LocationEntry.COLUMN_LOCATION_SETTING + " TEXT NOT NULL,"
@@ -76,7 +76,7 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
 
                 // Set up the location column as a foreign key to location table.
                 " FOREIGN KEY (" + WeatherEntry.COLUMN_LOC_KEY + ") REFERENCES " +
-                LocationEntry.Table_Name + " (" + LocationEntry._ID + "), " +
+                LocationEntry.TABLE_NAME + " (" + LocationEntry._ID + "), " +
 
                 // To assure the application have just one weather entry per day
                 // per location, it's created a UNIQUE constraint with REPLACE strategy
@@ -97,7 +97,7 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
         // It does NOT depend on the version number for your application.
         // If you want to update the schema without wiping data, commenting out the next 2 lines
         // should be your top priority before modifying this method.
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + LocationEntry.Table_Name);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + LocationEntry.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + WeatherEntry.TABLE_NAME);
         onCreate(sqLiteDatabase);
 
